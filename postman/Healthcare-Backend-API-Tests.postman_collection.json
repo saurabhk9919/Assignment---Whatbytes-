@@ -1,0 +1,696 @@
+{
+  "info": {
+    "_postman_id": "2e6a01fe-d8fd-046d-9d58-6a2a00000000",
+    "name": "Healthcare Backend API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "All testings",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Saurabh\",\n  \"email\": \"Saurabhk@gmail.com\",\n  \"password\": \"TestPass123!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/register/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "register",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Saurabh\",\n  \"email\": \"Saurabhk@gmail.com\",\n  \"password\": \"TestPass123!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/register/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "register",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Patients",
+          "item": [
+            {
+              "name": "Delete Patient",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{jwtToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:5000/api/patients/2/",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "5000",
+                  "path": [
+                    "api",
+                    "patients",
+                    "2",
+                    ""
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Patient by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{jwtToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:5000/api/patients/2/",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "5000",
+                  "path": [
+                    "api",
+                    "patients",
+                    "2",
+                    ""
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Patients",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{jwtToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:5000/api/patients/",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "5000",
+                  "path": [
+                    "api",
+                    "patients",
+                    ""
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Patient",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{jwtToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Rahul Sharma\",\n  \"age\": 28,\n  \"gender\": \"Male\",\n  \"address\": \"Delhi, India\",\n  \"phone\": \"9876543210\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/patients/",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "5000",
+                  "path": [
+                    "api",
+                    "patients",
+                    ""
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Patient",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{jwtToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Rahul Sharma\",\n  \"age\": 29,\n  \"gender\": \"Male\",\n  \"address\": \"Noida, Uttar Pradesh\",\n  \"phone\": \"9876543210\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/patients/2/",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "5000",
+                  "path": [
+                    "api",
+                    "patients",
+                    "2",
+                    ""
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Doctors",
+              "item": [
+                {
+                  "name": "Create Doctor",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{jwtToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"Dr. Priya Mehta\",\n  \"specialization\": \"Cardiology\",\n  \"email\": \"priya.mehta@example.com\",\n  \"phone\": \"9876543211\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:5000/api/doctors/",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "5000",
+                      "path": [
+                        "api",
+                        "doctors",
+                        ""
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Get All Doctors",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{jwtToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "http://localhost:5000/api/doctors/",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "5000",
+                      "path": [
+                        "api",
+                        "doctors",
+                        ""
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Get Doctor by ID",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{jwtToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "http://localhost:5000/api/doctors/2/",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "5000",
+                      "path": [
+                        "api",
+                        "doctors",
+                        "2",
+                        ""
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Update Doctor",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{jwtToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"Dr. Priya Mehta\",\n  \"specialization\": \"Neurology\",\n  \"email\": \"priya.mehta@example.com\",\n  \"phone\": \"9876543211\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:5000/api/doctors/2/",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "5000",
+                      "path": [
+                        "api",
+                        "doctors",
+                        "2",
+                        ""
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Delete Doctor",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{jwtToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "http://localhost:5000/api/doctors/2/",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "5000",
+                      "path": [
+                        "api",
+                        "doctors",
+                        "2",
+                        ""
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Patient-Doctor Mappings",
+                  "item": [
+                    {
+                      "name": "New Patient",
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{jwtToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"Aarav Sharma\",\n  \"age\": 35,\n  \"gender\": \"Male\",\n  \"address\": \"Delhi, India\",\n  \"phone\": \"9876501111\"\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "http://localhost:5000/api/patients/",
+                          "protocol": "http",
+                          "host": [
+                            "localhost"
+                          ],
+                          "port": "5000",
+                          "path": [
+                            "api",
+                            "patients",
+                            ""
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "Get All Doctors",
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{jwtToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "http://localhost:5000/api/doctors/",
+                          "protocol": "http",
+                          "host": [
+                            "localhost"
+                          ],
+                          "port": "5000",
+                          "path": [
+                            "api",
+                            "doctors",
+                            ""
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "Assign Doctor to Patient",
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{jwtToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"patientId\": 3,\n  \"doctorId\": 1\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "http://localhost:5000/api/mappings/",
+                          "protocol": "http",
+                          "host": [
+                            "localhost"
+                          ],
+                          "port": "5000",
+                          "path": [
+                            "api",
+                            "mappings",
+                            ""
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "Get All Mappings",
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{jwtToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "http://localhost:5000/api/mappings/",
+                          "protocol": "http",
+                          "host": [
+                            "localhost"
+                          ],
+                          "port": "5000",
+                          "path": [
+                            "api",
+                            "mappings",
+                            ""
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "Get Patient's Doctors",
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{jwtToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "http://localhost:5000/api/mappings/3/",
+                          "protocol": "http",
+                          "host": [
+                            "localhost"
+                          ],
+                          "port": "5000",
+                          "path": [
+                            "api",
+                            "mappings",
+                            "3",
+                            ""
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "Delete Mapping",
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{jwtToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                          "raw": "http://localhost:5000/api/mappings/2/",
+                          "protocol": "http",
+                          "host": [
+                            "localhost"
+                          ],
+                          "port": "5000",
+                          "path": [
+                            "api",
+                            "mappings",
+                            "2",
+                            ""
+                          ]
+                        }
+                      },
+                      "response": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "json_web_token_0fc6",
+      "value": "",
+      "type": "secret"
+    }
+  ]
+}
