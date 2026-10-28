@@ -4,6 +4,7 @@ const express = require("express");
 const prisma = require("./config/prisma");
 
 const authRoutes = require("./routes/authRoutes");
+const patientRoutes = require("./routes/patientRoutes");
 
 const app = express();
 
@@ -17,14 +18,14 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 
-// Handle unknown routes
+app.use("/api/patients", patientRoutes);
+
 app.use((req, res) => {
   res.status(404).json({
     message: "Route not found",
   });
 });
 
-// Centralized error handler
 app.use((err, req, res, next) => {
   console.error(err);
 
