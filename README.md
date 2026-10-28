@@ -2,79 +2,95 @@
 
 Healthcare Backend API is a Node.js and Express.js REST API for managing users, patients, doctors, and patient-doctor assignments. Authenticated users can manage their own patients, access the shared doctor directory, and assign doctors to their patients.
 
+This repository is the Node.js/Express implementation of the WhatBytes healthcare backend assignment. It is not a Django or Django REST Framework project.
+
 ## Technology Stack
 
-| Technology | Purpose |
-| --- | --- |
-| Node.js | JavaScript runtime |
-| Express.js `^5.3.0` | HTTP server and routing |
-| PostgreSQL | Relational database |
-| Prisma ORM / Prisma Client `^6.19.3` | Database schema, migrations, and queries |
-| JSON Web Token `^9.0.3` | Authentication tokens |
-| bcrypt `^6.0.0` | Password hashing and verification |
-| express-validator `^7.3.2` | Request validation |
-| dotenv `^18.0.9` | Loading environment variables |
-| nodemon `^3.1.14` | Development-time server restarts |
+| Technology | Version | Purpose |
+| --- | --- | --- |
+| Node.js | Runtime | Runs the backend |
+| Express.js | `^5.3.0` | HTTP server and routing |
+| PostgreSQL | Database | Persistent relational storage |
+| Prisma ORM / Prisma Client | `^6.19.3` | Schema, migrations, and database queries |
+| `jsonwebtoken` | `^9.0.3` | JWT creation and verification |
+| `bcrypt` | `^6.0.0` | Password hashing and verification |
+| `express-validator` | `^7.3.2` | Request validation |
+| `dotenv` | `^18.0.9` | Environment-variable loading |
+| `nodemon` | `^3.1.14` (development) | Automatic development-server restarts |
 
-The project is configured for PostgreSQL through Prisma's `DATABASE_URL` datasource. The package manifest also declares `cors`, `pg`, `pg-hstore`, and `sequelize`; the active application code uses Prisma Client for database access and does not register a separate CORS middleware.
+The package manifest also declares `cors`, `pg`, `pg-hstore`, and `sequelize`. The active application code uses Prisma Client for database access and does not register a separate CORS middleware or Sequelize connection.
 
 ## Features
 
 - User registration and login.
-- JWT-based authentication for protected API routes.
-- Password hashing with bcrypt before passwords are stored.
+- JWT-based authentication for protected routes.
+- Password hashing with bcrypt.
 - Patient CRUD operations with authenticated-user-specific access control.
 - Doctor CRUD operations for authenticated users.
-- Assign doctors to patients owned by the authenticated user.
-- Retrieve all assignments or the doctors assigned to a specific patient.
-- Remove patient-doctor assignments.
-- Input validation with `express-validator`.
-- Centralized error handling for unexpected errors and common Prisma errors.
-- PostgreSQL persistence managed with Prisma ORM.
-- Duplicate unique values return a conflict response instead of exposing database internals.
+- Patient-doctor assignment and removal.
+- Retrieval of all mappings and the doctors assigned to a specific patient.
+- Request validation with `express-validator`.
+- PostgreSQL persistence through Prisma ORM.
+- Centralized error handling that avoids exposing internal database error details.
 
 ## Project Structure
+
+The following is the committed application structure:
 
 ```text
 healthcare-backend/
 ├── config/
-│   └── prisma.js                 # Shared Prisma Client instance
+│   └── prisma.js
 ├── controllers/
-│   ├── authController.js         # Registration and login logic
-│   ├── doctorController.js       # Doctor CRUD logic
-│   ├── mappingController.js      # Patient-doctor assignment logic
-│   └── patientController.js      # Patient CRUD logic
+│   ├── authController.js
+│   ├── doctorController.js
+│   ├── mappingController.js
+│   └── patientController.js
 ├── middleware/
-│   └── authMiddleware.js         # Bearer-token authentication
+│   └── authMiddleware.js
+├── postman/
+│   └── Healthcare-Backend-API-Tests.postman_collection.json
 ├── prisma/
 │   ├── migrations/
-│   │   └── 20261028120531_init/  # Initial database migration
-│   └── schema.prisma             # Prisma models and PostgreSQL datasource
+│   │   ├── 20261028120531_init/
+│   │   │   └── migration.sql
+│   │   └── migration_lock.toml
+│   └── schema.prisma
 ├── routes/
-│   ├── authRoutes.js             # Public authentication routes
-│   ├── doctorRoutes.js           # Protected doctor routes
-│   ├── mappingRoutes.js          # Protected assignment routes
-│   └── patientRoutes.js          # Protected patient routes
+│   ├── authRoutes.js
+│   ├── doctorRoutes.js
+│   ├── mappingRoutes.js
+│   └── patientRoutes.js
 ├── validators/
 │   ├── authValidator.js
 │   ├── doctorValidator.js
 │   ├── mappingValidator.js
-│   └── patientValidator.js       # Request validation rules
-├── .env                          # Local environment variables (not committed)
+│   └── patientValidator.js
 ├── .gitignore
-├── package.json
 ├── package-lock.json
-├── schema.sql                    # SQL schema reference
-└── server.js                     # Express application entry point
+├── package.json
+├── README.md
+└── server.js
 ```
 
-The `models/` directory is present in the repository but contains no application model files; database models are defined in `prisma/schema.prisma`.
+Directory responsibilities:
+
+- `config/` — shared Prisma Client configuration.
+- `controllers/` — authentication, patient, doctor, and mapping business logic.
+- `middleware/` — Bearer-token authentication middleware.
+- `postman/` — exported Postman request collection for manual API verification.
+- `prisma/` — PostgreSQL datasource, Prisma models, and committed migrations.
+- `routes/` — Express route definitions and middleware wiring.
+- `validators/` — `express-validator` rules for request bodies.
+
+The repository does not contain a `docs/` directory or application model files under `models/`. Database models are defined in `prisma/schema.prisma`. Developers create `.env` locally; it is excluded by `.gitignore` and is not a committed project file.
 
 ## Prerequisites
 
 - Node.js and npm
 - PostgreSQL
 - Git
+- Postman, if using the exported collection
 
 ## Installation and Setup
 
@@ -85,7 +101,7 @@ git clone https://github.com/saurabhk9919/Assignment---Whatbytes-.git
 cd Assignment---Whatbytes-
 ```
 
-If the repository directory has a different local name, change into the directory that contains `package.json`.
+If the checkout directory has a different local name, change into the directory containing `package.json`.
 
 ### 2. Install dependencies
 
@@ -95,13 +111,13 @@ npm install
 
 ### 3. Create the PostgreSQL database
 
-Create a PostgreSQL database named `healthcare_db`. For example, using `psql`:
+Create a local PostgreSQL database named `healthcare_db`. For example:
 
 ```bash
 createdb healthcare_db
 ```
 
-Alternatively, run this statement in a PostgreSQL client while connected to a database where you have permission to create databases:
+Alternatively, run this SQL using a PostgreSQL client:
 
 ```sql
 CREATE DATABASE healthcare_db;
@@ -109,7 +125,7 @@ CREATE DATABASE healthcare_db;
 
 ### 4. Configure environment variables
 
-Create a `.env` file in the project root:
+Create a `.env` file in the project root using safe placeholders:
 
 ```env
 PORT=5000
@@ -118,57 +134,61 @@ JWT_SECRET="replace_with_a_secure_random_secret"
 JWT_EXPIRES_IN="1d"
 ```
 
-`JWT_SECRET` is required for login and token verification. `JWT_EXPIRES_IN` defaults to `1d` in the login controller when it is not set. `PORT` defaults to `5000` when it is not set.
+`DATABASE_URL` is consumed by Prisma. `JWT_SECRET` is required for login and token verification. `JWT_EXPIRES_IN` controls the token lifetime and defaults to `1d` in the login controller when it is not set. `PORT` defaults to `5000`.
 
-**Never commit `.env`, database credentials, JWT secrets, or any other real secrets.** The repository's `.gitignore` excludes `.env`.
+Never commit `.env`, real passwords, JWT secrets, database credentials, or other sensitive values. The repository excludes `.env` through `.gitignore`.
 
 ## Database Setup
 
-Generate the Prisma Client and run the database migration:
+Prisma is the active ORM, and [prisma/schema.prisma](prisma/schema.prisma) is the database schema definition. Generate the Prisma Client and apply the development migration:
 
 ```bash
 npx prisma generate
 npx prisma migrate dev
 ```
 
-This repository already contains an initial migration at `prisma/migrations/20261028120531_init/`.
+The repository contains this committed initial migration:
 
-For deployment or another environment where migrations have already been created, apply committed migrations without creating new ones:
+```text
+prisma/migrations/20261028120531_init/migration.sql
+```
+
+For deployment or another environment where the committed migrations should be applied without creating a new migration:
 
 ```bash
 npx prisma migrate deploy
 ```
 
-The Prisma schema contains these models:
+The schema defines these models:
 
-- `User`: registered users and hashed passwords.
-- `Patient`: patient records owned by a user.
-- `Doctor`: shared doctor records.
-- `PatientDoctor`: unique patient-doctor assignments.
+- `User` — registered users and hashed passwords.
+- `Patient` — patient records owned by a user.
+- `Doctor` — shared doctor records.
+- `PatientDoctor` — unique patient-doctor assignments.
 
 ## Running the API
 
-Start the server in development mode with automatic restarts:
+Development mode:
 
 ```bash
 npm run dev
 ```
 
-Start the server normally:
+Normal start:
 
 ```bash
 npm start
 ```
 
-The API listens on `http://localhost:5000` by default, or on the port configured by `PORT`.
+The API listens at `http://localhost:5000` by default, or at the port configured by `PORT`.
 
-The root health response is available at:
+The root health endpoint is:
 
-```text
+```http
 GET /
 ```
 
-Expected response:
+Response:
 
 ```json
 {
@@ -178,21 +198,19 @@ Expected response:
 
 ## Authentication
 
-Register or log in through the public authentication endpoints. Login returns a JWT:
+Registration and login are public. Patient, doctor, and mapping routes require a valid Bearer JWT:
 
 ```http
 Authorization: Bearer <token>
 ```
 
-Include this header on every `/api/patients`, `/api/doctors`, and `/api/mappings` request. Requests without a token, with a malformed token, or with an expired token return `401 Unauthorized`.
+Requests without a token, with a malformed token, or with an expired token return `401 Unauthorized`.
 
 ## API Endpoints
 
-Trailing slashes shown below match the route declarations. Express also handles the corresponding route without a trailing slash.
+The trailing slashes below match the route declarations. Express also handles the corresponding paths without a trailing slash.
 
 ### Authentication
-
-These endpoints are public.
 
 #### Register
 
@@ -211,7 +229,7 @@ Request body:
 }
 ```
 
-Validation requires a non-empty name, a valid email address, and a password of at least 8 characters. A successful registration returns `201 Created` and excludes the password from the response. An already-registered email returns `409 Conflict`.
+Validation requires a non-empty name, a valid email address, and a password of at least eight characters. A successful registration returns `201 Created` without returning the password. An already-registered email returns `409 Conflict`.
 
 #### Login
 
@@ -229,11 +247,11 @@ Request body:
 }
 ```
 
-A successful login returns `200 OK` with `token` and user details. Invalid credentials return `401 Unauthorized`.
+A successful login returns `200 OK` with a JWT `token` and user details. Invalid credentials return `401 Unauthorized`.
 
 ### Patients
 
-All patient endpoints require a Bearer token. Patient list, detail, update, and delete operations are restricted to patients owned by the authenticated user.
+All patient endpoints require a Bearer JWT. Patient list, detail, update, and delete operations are restricted to records owned by the authenticated user.
 
 | Method | Endpoint | Description |
 | --- | --- | --- |
@@ -243,7 +261,7 @@ All patient endpoints require a Bearer token. Patient list, detail, update, and 
 | `PUT` | `/api/patients/:id/` | Update one of the authenticated user's patients |
 | `DELETE` | `/api/patients/:id/` | Delete one of the authenticated user's patients |
 
-Patient create/update fields:
+Create-patient request body:
 
 ```json
 {
@@ -255,11 +273,11 @@ Patient create/update fields:
 }
 ```
 
-`name` is required when creating a patient. `age` is optional and must be an integer from 0 through 130. The remaining fields are optional strings. Update fields are optional, but supplied values must pass the same field validation.
+`name` is required when creating a patient. `age` is optional and must be an integer from 0 through 130. `gender`, `address`, and `phone` are optional strings. Update fields are optional, but supplied values must pass the same field validation.
 
 ### Doctors
 
-All doctor endpoints require a Bearer token. Doctors are not scoped to the creating user in the current implementation.
+All doctor endpoints require a Bearer JWT. Doctors are shared resources in the current implementation and are not scoped to the user who created them.
 
 | Method | Endpoint | Description |
 | --- | --- | --- |
@@ -269,7 +287,7 @@ All doctor endpoints require a Bearer token. Doctors are not scoped to the creat
 | `PUT` | `/api/doctors/:id/` | Update a doctor |
 | `DELETE` | `/api/doctors/:id/` | Delete a doctor |
 
-Doctor create/update fields:
+Create-doctor request body:
 
 ```json
 {
@@ -284,7 +302,7 @@ Doctor create/update fields:
 
 ### Patient-doctor mappings
 
-All mapping endpoints require a Bearer token. A user can assign doctors only to their own patients.
+All mapping endpoints require a Bearer JWT. A user can assign doctors only to their own patients.
 
 | Method | Endpoint | Description |
 | --- | --- | --- |
@@ -306,7 +324,7 @@ Both IDs must be positive integers. Assigning the same doctor to the same patien
 
 ## Validation and Error Responses
 
-Validation failures return `400 Bad Request` with a consistent shape:
+Validation failures return `400 Bad Request`:
 
 ```json
 {
@@ -320,12 +338,52 @@ Validation failures return `400 Bad Request` with a consistent shape:
 }
 ```
 
-The server also provides:
+The centralized error handler also provides:
 
 - `401 Unauthorized` for missing or invalid authentication tokens.
 - `404 Not Found` for missing resources and unknown routes.
 - `409 Conflict` for duplicate unique values or duplicate assignments.
-- `500 Internal Server Error` for unexpected failures. Internal error details are logged by the server and are not sent to clients.
+- `500 Internal Server Error` for unexpected failures.
+
+Unexpected database and application error details are logged server-side but are not returned to clients.
+
+## Postman API Collection
+
+The repository includes an exported collection for importing and manually trying the API endpoints:
+
+```text
+postman/Healthcare-Backend-API-Tests.postman_collection.json
+```
+
+The collection contains these request groups:
+
+- Registration and login
+- Patient CRUD requests
+- Doctor CRUD requests
+- Patient-doctor mapping requests, including creating a patient, listing doctors, assigning a doctor, listing mappings, listing a patient's doctors, and deleting a mapping
+
+### Import and use the collection
+
+1. Install and open Postman.
+2. Download or clone this repository.
+3. In Postman, click **Import**.
+4. Select `postman/Healthcare-Backend-API-Tests.postman_collection.json`.
+5. Start the API and configure the base URL as `http://localhost:5000` when using the default port. The exported requests currently contain the local URL directly.
+6. Register a test user and log in.
+7. Copy the JWT returned by login into the collection variable used by the protected requests.
+8. Run the authenticated patient, doctor, and patient-doctor mapping requests with a valid token and IDs from the local database.
+
+The protected requests in the exported JSON use `{{jwtToken}}` in their Authorization headers. The exported collection currently defines a different variable named `json_web_token_0fc6` and does not define `jwtToken`. Before running protected requests, either create a collection variable named `jwtToken` and set its value to the returned JWT, or update the requests to reference the existing variable. This documents the collection as it exists; no automatic variable synchronization is assumed.
+
+The exported collection preserves request definitions only. It does not by itself prove that every request succeeds, and this repository does not claim saved successful response histories, automated assertions, or a collection-runner report unless they are produced separately.
+
+Do not use real passwords, JWTs, database credentials, or other secrets in a collection that may be shared or committed.
+
+## Postman Testing and Verification
+
+The exported collection is provided for manual API verification. Run the backend, configure PostgreSQL and the local `.env`, apply the Prisma migration, and use a valid Bearer JWT for protected requests.
+
+Automated tests are not included in the repository: [package.json](package.json) contains only the `start` and `dev` scripts, and no automated test files were found. The presence of the Postman collection does not mean that every request has been executed successfully or that a Postman collection-runner suite exists.
 
 ## Available npm Scripts
 
