@@ -1,6 +1,10 @@
 
 const express = require("express");
 const authenticateToken = require("../middleware/authMiddleware");
+const {
+  createDoctorValidation,
+  updateDoctorValidation,
+} = require("../validators/doctorValidator");
 
 const {
   createDoctor,
@@ -15,12 +19,12 @@ const router = express.Router();
 router.use(authenticateToken);
 
 router.route("/")
-  .post(createDoctor)
+  .post(createDoctorValidation, createDoctor)
   .get(getDoctors);
 
 router.route("/:id/")
   .get(getDoctorById)
-  .put(updateDoctor)
+  .put(updateDoctorValidation, updateDoctor)
   .delete(deleteDoctor);
 
 module.exports = router;
